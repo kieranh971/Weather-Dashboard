@@ -1,8 +1,7 @@
 // console.log("Connected")
 // To Do:
 // Add city to a list after search
-// Add humidity, wind speed, and uv index
-// UV index should be color coated
+// Add UV index - should be color coated
 // Should be able to click on city in list for weather info again
 
 function GetWeather() {
@@ -27,6 +26,14 @@ function GetWeather() {
             document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
             data.list[i].weather[0].icon
             +".png";
+        }
+        // Humidity
+        for(i=0; i<5; i++) {
+            document.getElementById("Humidity" + (i+1)).innerHTML = "Humidity: " + Number(data.list[i].main.humidity).toFixed(2) + "°F";
+        }
+        // Wind Speed
+        for(i=0; i<5; i++) {
+            document.getElementById("WindSpeed" + (i+1)).innerHTML = "Wind Speed: " + Number(data.list[i].wind.speed).toFixed(2) + " mph";
         }
         console.log(data)
     })
