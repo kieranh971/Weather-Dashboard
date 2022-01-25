@@ -3,6 +3,12 @@
 // Add city to a list after search
 // Add UV index - should be color coated
 // Should be able to click on city in list for weather info again
+const searchEl = document.getElementById("searchBtn");
+const clearEl = document.getElementById("clearBtn");
+const inputEl = document.getElementById("cityInput");
+const historyEl = document.getElementById("history")
+let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+console.log(searchHistory)
 
 function GetWeather() {
     var newCity = document.getElementById("cityInput");
@@ -61,4 +67,37 @@ function CheckDay(day){
 
 for(i = 0; i<5; i++) {
     document.getElementById("Day" + (i+1)).innerHTML = weekday[CheckDay(i)];
+}
+
+searchEl.addEventListener("click", function(){
+    const searchTerm = inputEl.value;
+    GetWeather(searchTerm)
+    searchHistory.push(searchTerm)
+    localStorage.setItem("search", JSON.stringify(searchHistory));
+    renderSearchHistory()
+})
+clearEl.addEventListener("click", function(){
+    searchHistory = [];
+    window.localStorage.clear()
+    renderSearchHistory();
+})
+
+function renderSearchHistory() {
+    historyEl.innerHTML = "";
+    for(let i=0; i<searchHistory.length; i++) {
+        const historyItem = document.createElement("input");
+        historyItem.setAttribute("type","text");
+        historyItem.setAttribute("readonly",true);
+        // historyItem.setAttribute("class","text");
+        historyItem.setAttribute("value",searchHistory[i]);
+        historyItem.addEventListener("click", function(){
+            GetWeather(historyItem.value);
+        })
+        historyEl.append(historyItem)
+    }
+}
+
+renderSearchHistory();
+if (searchHistory.length > 0){
+    GetWeather(searchHistory[searchHistory.length - 1]);
 }
