@@ -1,8 +1,4 @@
 // console.log("Connected")
-// To Do:
-// Add city to a list after search
-// Add UV index - should be color coated
-// Should be able to click on city in list for weather info again
 const searchEl = document.getElementById("searchBtn");
 const clearEl = document.getElementById("clearBtn");
 const inputEl = document.getElementById("cityInput");
